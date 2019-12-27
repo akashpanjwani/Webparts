@@ -1,0 +1,13 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "businedd-area-block-client-side-solution",
+    "id": "7bc2c3d5-df2e-4e46-ae11-07bf22100586",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "isDomainIsolated": false
+  },
+  "paths": {
+    "zippedPackage": "solution/businedd-area-block.sppkg"
+  }
+}

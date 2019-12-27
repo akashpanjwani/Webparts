@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "business-area-block-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/businessAreaBlock/BusinessAreaBlockWebPart.js",
+          "manifest": "./src/webparts/businessAreaBlock/BusinessAreaBlockWebPart.manifest.json"
+        }
+      ]
+    },
+    "project-block-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/projectBlock/ProjectBlockWebPart.js",
+          "manifest": "./src/webparts/projectBlock/ProjectBlockWebPart.manifest.json"
+        }
+      ]
+    },
+    
+    "link-image-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/linkImage/LinkImageWebPart.js",
+          "manifest": "./src/webparts/linkImage/LinkImageWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "jquery": {
+      "path": "/node_modules/jquery/dist/jquery.min.js",
+      "globalName": "jQuery"
+    }
+  },
+  "localizedResources": {
+    "BusinessAreaBlockWebPartStrings": "lib/webparts/businessAreaBlock/loc/{locale}.js",
+    "ProjectBlockWebPartStrings": "lib/webparts/projectBlock/loc/{locale}.js",
+    "LinkImageWebPartStrings": "lib/webparts/linkImage/loc/{locale}.js"
+  }
+}
