@@ -6,7 +6,8 @@ export interface IBusinessAreaBlockState {
     fileName:string;
     fileURL:string;
     user:string;
-    userSpecialist:string;
+    userEmail:string;
+    userPhone:string;
    
   }
   

@@ -32,6 +32,11 @@
     @include ms-fontColor-white;
   }
 
+  .inline { 
+    display: inline-block; 
+    margin:10px;
+    }
+    
   .description {
     @include ms-font-l;
     @include ms-fontColor-white;

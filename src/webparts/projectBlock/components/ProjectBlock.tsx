@@ -222,13 +222,28 @@ export default class ProjectBlock extends React.Component<IProjectBlockProps, IP
                   </div>
                 </div>
                 <div className={styles.dummyInline} style={{ width: "45%" }}>
-                  <div>Select Columns</div>
-                  <Dropdown placeholder="Select an option" options={ReportOption} multiSelect={true} onChange={this.handleReportComapnyDropDownOnChange} />
+                
+                  {/* <Dropdown placeholder="Select an option" options={ReportOption} multiSelect={true} onChange={this.handleReportComapnyDropDownOnChange} /> */}
 
                   <div style={{ borderBottom: "1px solid" }}><p className={styles.DetailPara} style={{ fontWeight: 600 }}>At a Glance</p></div>
                   <ul></ul>
-                  <div className={styles.divInline} id="dynamicField">
-
+                  <div>
+                    <div className={styles.inline}>
+                      <div>Start Date</div></div>
+                    <div className={styles.inline}>
+                      <div>{Ideas.StartDate}</div></div>
+                  </div>
+                  <div>
+                    <div className={styles.inline}>
+                      <div>Contract length</div></div>
+                    <div className={styles.inline}>
+                      <div>{Ideas.length} year's</div></div>
+                  </div>
+                  <div>
+                    <div className={styles.inline}>
+                      <div>Contract Size</div></div>
+                    <div className={styles.inline}>
+                      <div>{Ideas.Size}</div></div>
                   </div>
                   <div className={styles.divInline}>
 

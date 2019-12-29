@@ -28,7 +28,8 @@
     "jquery": "^3.4.1",
     "office-ui-fabric-react": "6.189.2",
     "react": "16.8.5",
-    "react-dom": "16.8.5"
+    "react-dom": "16.8.5",
+    "sp-pnp-js": "^3.0.10"
   },
   "resolutions": {
     "@types/react": "16.8.8"

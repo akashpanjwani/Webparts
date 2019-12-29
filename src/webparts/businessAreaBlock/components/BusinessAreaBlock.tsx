@@ -8,8 +8,12 @@ import { Label } from 'office-ui-fabric-react/lib/Label';
 import { FontSizes } from '@uifabric/styling';
 import { SPComponentLoader } from '@microsoft/sp-loader';
 import { ServiceScope } from '@microsoft/sp-core-library';
-import { CamlQuery } from '@pnp/sp';
+import { CamlQuery, Item } from '@pnp/sp';
 import * as pnp from '@pnp/sp';
+import * as Newpnp from 'sp-pnp-js'; 
+
+let userEmail;
+let userPhone;
 export default class BusinessAreaBlock extends React.Component<IBusinessAreaBlockProps, IBusinessAreaBlockState> {
 
   public constructor(props: IBusinessAreaBlockProps) {
@@ -24,7 +28,8 @@ export default class BusinessAreaBlock extends React.Component<IBusinessAreaBloc
       fileName: "",
       fileURL: "",
       user: "",
-      userSpecialist: "",
+      userEmail: "",
+      userPhone: ""
     };
 
     let serviceScope: ServiceScope;
@@ -33,7 +38,7 @@ export default class BusinessAreaBlock extends React.Component<IBusinessAreaBloc
   }
 
   public componentDidMount() {
-    this.GetLinkData(this.props.site, "23d68e73-528a-441e-bbd7-3a24721f8aed", this.props.currentUser).then((response: any) => {
+    this.GetLinkData(this.props.site, "BusinessBlock", this.props.currentUser).then((response: any) => {
       this.setState({
         BusinessIdea: response.results
       });
@@ -82,31 +87,48 @@ export default class BusinessAreaBlock extends React.Component<IBusinessAreaBloc
   public async BindWorkItems(siteUrl: string, listId: string, query: CamlQuery, currentUser: string) {
     let web = new pnp.Web(siteUrl);
 
-    const result = await web.lists.getById(listId).getItemsByCAMLQuery(query, 'FieldValuesAsText', 'fileLeafRef', 'FileRef');
+    const result = await web.lists.getByTitle(listId).getItemsByCAMLQuery(query, 'FieldValuesAsText', 'fileLeafRef', 'FileRef');
 
     var response: any = {};
     let IdeasObj: any = [];
-    result.forEach((item: any) => {
-      var userEmail;
-      web.siteUsers.getById(item.userId).get().then((result)=> {
-        var userInfo = "";       
-          userEmail=result.Email;       
-      });
-      var imgPath=this.props.site+"/_layouts/15/userphoto.aspx?size=L&accountname="+userEmail;
-      IdeasObj.push({
-        Title: item.Title,
-        URL: item.URL,
-        Description: item.Description,
-        fileName: item.FileLeafRef,
-        fileURL: item.FileRef,
-        user: item.FieldValuesAsText.user,
-        userSpecialist: item.UserSpecialist,
-        imgPath:imgPath
-      });
+
+
+    for (let item of result){
+    //result.forEach((item: any) => {
+
+      await web.siteUsers.getById(item.userId).get().then(async (userResult) => {
+        var userInfo = "";
+        userEmail = userResult.Email;
+        let loginName = "i:0#.f|membership|" + userEmail;
+      //   await Newpnp.sp.profiles.getPropertiesFor(loginName).then(resp => {
+      //     let props = {};
+      //     resp.UserProfileProperties.map((val) => {
+      //       if (val.Key == "WorkPhone") {
+      //         console.log(val.Value);
+      //         userPhone = val.Value;
+      //       }
+      //     });
+          
+      // });
     });
 
-    response.results = IdeasObj;
-    return response;
+    var imgPath = this.props.site + "/_layouts/15/userphoto.aspx?size=L&accountname=" + item.FieldValuesAsText.user;
+          IdeasObj.push({
+            Title: item.FieldValuesAsText.Title,
+            URL: item.URL,
+            Description: item.Description,
+            fileName: item.FileLeafRef,
+            fileURL: item.FileRef,
+            user: item.FieldValuesAsText.user,
+            imgPath: imgPath,
+            userEmail: userEmail,
+            userPhone: userPhone,
+          });
+        }
+
+        response.results = IdeasObj;
+        return response;
+
   }
 
   /***************************/
@@ -116,7 +138,9 @@ export default class BusinessAreaBlock extends React.Component<IBusinessAreaBloc
     const Ideas: JSX.Element = this.state.BusinessIdea ?
       <div>
         {this.state.BusinessIdea.map((Ideas) => {
-          var fileUrl = "https://researchdev.sharepoint.com/" + Ideas.fileURL;
+          var fileUrl = this.props.site + "/" + Ideas.fileURL;
+          var emailURL = "mailto:" + Ideas.userEmail;
+          var Tel = "tel:" + userPhone;
           return (
             <div className={styles.businessAreaBlock}>
               <div className={styles.container}>
@@ -132,16 +156,16 @@ export default class BusinessAreaBlock extends React.Component<IBusinessAreaBloc
                   <Image
                     src={Ideas.imgPath}
                     alt="Example implementation of the property image fit using the none value on an image smaller than the frame."
-                    style={{ borderRadius: "50%",height:"70px" }}
+                    style={{ borderRadius: "50%", height: "70px" }}
                   />
                 </div>
                 <div className={styles.dummyInline} style={{ width: "15%" }}>
                   <p>Eve Compton</p>
-                  <p>{Ideas.userSpecialist}</p>
+                  <p>{Ideas.user}</p>
                 </div>
                 <div className={styles.dummyInlineicon}>
-                  <i className="fa fa-envelope" id={styles.envelope}></i>
-                  <i className="fa fa-phone" id={styles.envelope}></i>
+                  <a href={emailURL} target="_blank"><i className="fa fa-envelope" id={styles.envelope}></i></a>
+                  <a href={Tel} target="_blank"><i className="fa fa-phone" id={styles.envelope}></i></a>
                   <i className="fa fa-file" id={styles.envelope}></i>
                 </div>
                 <div>

@@ -31,7 +31,7 @@ export default class LinkImage extends React.Component<ILinkImageProps, ILinkIma
   }
 
   public componentDidMount() {
-    this.GetLinkData(this.props.site, "aeb51f92-f56a-48b5-8b2d-5ea28ffc9545", this.props.currentUser).then((response: any) => {
+    this.GetLinkData(this.props.site, "LinkData", this.props.currentUser).then((response: any) => {
       this.setState({
         Idea: response.results
       });
@@ -78,7 +78,7 @@ export default class LinkImage extends React.Component<ILinkImageProps, ILinkIma
   public async BindWorkItems(siteUrl: string, listId: string, query: CamlQuery, currentUser: string) {
     let web = new pnp.Web(siteUrl);
 
-    const result = await web.lists.getById(listId).getItemsByCAMLQuery(query, 'FieldValuesAsText', 'fileLeafRef', 'FileRef');
+    const result = await web.lists.getByTitle(listId).getItemsByCAMLQuery(query, 'FieldValuesAsText', 'fileLeafRef', 'FileRef');
 
     var response: any = {};
     let IdeasObj: any = [];
@@ -105,19 +105,21 @@ export default class LinkImage extends React.Component<ILinkImageProps, ILinkIma
     const Ideas: JSX.Element = this.state.Idea ?
       <div>
         {this.state.Idea.map((Ideas) => {
-          var fileUrl = "https://researchdev.sharepoint.com/" + Ideas.fileURL;
+          var fileUrl = this.props.site+"/"+ Ideas.fileURL;
           return (
             <div className={styles.linkImage}>
               <div className={styles.container}>
-                <div className={styles.divImg} style={{ width: "20%" }}>
+                <div className={styles.divImg} style={{ width: "8%" }}>
                   <Image
                     src={fileUrl}
                     alt="Example implementation of the property image fit using the none value on an image smaller than the frame."
                     style={{ borderRadius: "50%" }}
+                    height="10"
+                    width="10"
                   />
                 </div>
                 <div className={styles.divText} style={{ width: "65%" }}>
-                  <Label className={styles.ttle}>{Ideas.Title}</Label>
+                  <a href={Ideas.URL} target="_blank" style={{cursor:"pointer"}}><Label style={{cursor:"pointer"}} className={styles.ttle}>{Ideas.Title}</Label></a>
                   <p className={styles.DetailPara}>{Ideas.Description}</p>
                 </div>
               </div>
