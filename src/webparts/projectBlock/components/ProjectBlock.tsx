@@ -187,7 +187,7 @@ export default class ProjectBlock extends React.Component<IProjectBlockProps, IP
           return (
             <div className={styles.projectBlock}>
               <div className={styles.container}>
-                <div className={styles.dummyInline} style={{ width: "45%" }}>
+                <div className={styles.dummyInline} style={{ width: "400px" }}>
                   <Label className={styles.ttle}>{Ideas.Title}</Label>
                   <Link href={itemURl} target="_blank">View Other Fields...</Link>
                   <p className={styles.DetailPara}>{Ideas.Description}</p>
@@ -221,7 +221,7 @@ export default class ProjectBlock extends React.Component<IProjectBlockProps, IP
 
                   </div>
                 </div>
-                <div className={styles.dummyInline} style={{ width: "45%" }}>
+                <div className={styles.dummyInline} style={{ width: "220px" }}>
                 
                   {/* <Dropdown placeholder="Select an option" options={ReportOption} multiSelect={true} onChange={this.handleReportComapnyDropDownOnChange} /> */}
 

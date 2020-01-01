@@ -102,10 +102,13 @@ export default class LinkImage extends React.Component<ILinkImageProps, ILinkIma
   /***************************/
   public render(): React.ReactElement<ILinkImageProps> {
 
+    var siteURL=this.props.site.split('/');
+    var webURl=siteURL.splice(0,3).join('/');
+
     const Ideas: JSX.Element = this.state.Idea ?
       <div>
         {this.state.Idea.map((Ideas) => {
-          var fileUrl = this.props.site+"/"+ Ideas.fileURL;
+          var fileUrl = webURl+"/"+ Ideas.fileURL;
           return (
             <div className={styles.linkImage}>
               <div className={styles.container}>

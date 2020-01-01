@@ -134,11 +134,13 @@ export default class BusinessAreaBlock extends React.Component<IBusinessAreaBloc
   /***************************/
 
   public render(): React.ReactElement<IBusinessAreaBlockProps> {
-
+    var siteURL=this.props.site.split('/');
+    var webURl=siteURL.splice(0,3).join('/');
     const Ideas: JSX.Element = this.state.BusinessIdea ?
       <div>
         {this.state.BusinessIdea.map((Ideas) => {
-          var fileUrl = this.props.site + "/" + Ideas.fileURL;
+        
+          var fileUrl = webURl + "/" + Ideas.fileURL;
           var emailURL = "mailto:" + Ideas.userEmail;
           var Tel = "tel:" + userPhone;
           return (
